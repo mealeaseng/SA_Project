@@ -1,0 +1,55 @@
+<div class="px-4 max-w-screen-xl mx-auto py-8 fade-down">
+  <h2 class="text-3xl font-bold text-center mb-10">Products in this Category</h2>
+
+  <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div
+      *ngFor="let product of products; let i = index"
+      class="product-card bg-gray-100 shadow-md rounded overflow-hidden text-center p-4 flex flex-col fade-up"
+    >
+      <img
+        [src]="
+          product.img?.startsWith('http') ? product.img : 'http://localhost:3000' + product.img
+        "
+        [alt]="product.name_product"
+        (error)="product.img = '/assets/default.jpg'"
+        class="w-48 h-40 object-cover mb-3 mx-auto"
+      />
+      <div class="font-bold text-lg text-blue-600 line-clamp-1">{{ product.name_product }}</div>
+      <p class="text-gray-600 text-sm mt-1">{{ product.dis }}</p>
+      <p class="text-red-500 text-sm underline mt-1">Discount: {{ product.discount }}%</p>
+      <p class="text-green-600 font-semibold text-lg mt-1">${{ product.price }}</p>
+      <p class="text-green-600 font-semibold text-lg mt-1">${{ product.stock }}</p>
+
+      <button
+        (click)="addToCart(product)"
+        class="mt-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4 flex justify-center items-center gap-2"
+      >
+        {{ product.qtyAdded > 0 ? 'Add More' : 'Add To Cart' }}
+        <span
+          *ngIf="product.qtyAdded > 0"
+          class="bg-white text-blue-600 rounded-full px-2 py-0.5 text-sm font-bold"
+        >
+          {{ product.qtyAdded }}
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Fixed Payment Buttons -->
+<div class="fixed bottom-6 right-6 z-50 fade-right">
+  <button
+    routerLink="/payment"
+    class="bg-green-500 mr-5 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300"
+    [disabled]="!hasItemsInCart()"
+  >
+    Payment
+  </button>
+  <button
+    (click)="Clear()"
+    class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300"
+    [disabled]="!hasItemsInCart()"
+  >
+    Clear All Product
+  </button>
+</div>

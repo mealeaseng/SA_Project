@@ -1,0 +1,10 @@
+/* Add separator lines between select options */
+.custom-select option {
+  border-bottom: 1px solid #e5e7eb; /* Tailwind gray-200 */
+  padding: 6px 10px;
+}
+
+/* Remove border for last item */
+.custom-select option:last-child {
+  border-bottom: none;
+}

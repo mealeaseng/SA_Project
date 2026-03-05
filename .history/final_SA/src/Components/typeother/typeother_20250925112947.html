@@ -1,0 +1,66 @@
+<h2 class="text-3xl font-bold mt-16 mb-6 text-center text-blue-700">Others</h2>
+<div class="p-6 max-w-3xl mx-auto">
+  <div *ngIf="cartOther.length === 0" class="text-center text-gray-400 py-8 text-base">
+    Cart is empty
+  </div>
+
+  <div
+    *ngFor="let item of cartOther; let i = index"
+    class="flex items-center justify-between mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50 shadow-sm"
+  >
+    <div class="flex items-center space-x-4">
+      <img
+        [src]="item.img"
+        [alt]="item.name"
+        class="w-12 h-12 rounded-lg object-cover border border-gray-200"
+      />
+      <div>
+        <div class="font-semibold text-gray-800 text-sm">{{ item.name }} (x{{ item.qty }})</div>
+        <div class="text-green-600 mr-[43px] text-sm font-medium">
+          {{ item.price * item.qty | currency : 'USD' }}
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button
+        (click)="decreaseQty(item)"
+        class="px-2 py-1 bg-gray-300 text-sm rounded hover:bg-gray-400"
+      >
+        -
+      </button>
+      <button
+        (click)="increaseQty(item)"
+        class="px-2 py-1 bg-gray-300 text-sm rounded hover:bg-gray-400"
+      >
+        +
+      </button>
+      <button
+        (click)="removeFromCart(i)"
+        class="text-red-500 hover:text-red-700 transition duration-200 text-sm font-medium hover:scale-105"
+        aria-label="Remove {{ item.name }} from cart"
+      >
+        ❌ Remove
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="cartOther.length > 0" class="mt-6 text-right">
+    <div class="font-bold text-xl text-blue-700 mb-4">
+      Total: {{ getTotal() | currency : 'USD' }}
+    </div>
+    <div class="flex justify-end gap-4 flex-wrap">
+      <button
+        (click)="paymetn()"
+        class="px-6 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 hover:scale-105 transition-all text-sm uppercase tracking-wide"
+      >
+        Payment
+      </button>
+      <button
+        (click)="clearCart()"
+        class="px-6 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 hover:scale-105 transition-all text-sm uppercase tracking-wide"
+      >
+        Clear Cart
+      </button>
+    </div>
+  </div>
+</div>

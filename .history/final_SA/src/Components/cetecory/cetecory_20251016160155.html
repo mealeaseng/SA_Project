@@ -1,0 +1,24 @@
+<!-- Products Section -->
+<div class="px-4 max-w-screen-xl mx-auto py-8 fade-up">
+  <h2 class="text-3xl font-bold text-center mb-10 fade-down">Let see more Product!</h2>
+
+  <div
+    class="sm:grid sm:grid-cols-2 md:grid-cols-4 gap-8 flex overflow-x-auto space-x-4 sm:space-x-0 sm:overflow-x-visible px-2"
+  >
+    <div
+      *ngFor="let category of categories; let i = index"
+      class="bg-white shadow-md min-w-[230px] sm:min-w-0 sm:w-full text-center rounded overflow-hidden"
+    >
+      <img
+        [src]="category.thumbnail"
+        [alt]="category.name_category"
+        class="w-full h-40 object-cover bg-gray-200"
+      />
+      <a [routerLink]="'/category/' + category._id">
+        <div class="py-3 text-blue-500 font-bold text-xl fade-up">
+          {{ category.name_category }}
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

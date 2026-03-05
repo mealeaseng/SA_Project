@@ -1,0 +1,163 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-8 transition-transform duration-300">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+
+    <!-- Username -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+      <input
+        type="text"
+        [(ngModel)]="usernameInput"
+        placeholder="Enter your name..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <p *ngIf="showUsernameError" class="text-sm text-red-600 mt-1">
+        Please enter your username ⚠️
+      </p>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+      <input
+        type="tel"
+        maxlength="9"
+        pattern="[0-9]*"
+        [(ngModel)]="phone_num"
+        placeholder="Enter your 9-digit number..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <p *ngIf="showPhoneError" class="text-sm text-red-600 mt-1">
+        Phone number must be exactly 9 digits ⚠️
+      </p>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input
+        type="email"
+        [(ngModel)]="emailInput"
+        placeholder="Enter your email..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <p *ngIf="showEmailError" class="text-sm text-red-600 mt-1">Invalid email address ⚠️</p>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+      <input
+        type="password"
+        [(ngModel)]="Pss"
+        placeholder="********"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <p *ngIf="showPasswordError" class="text-sm text-red-600 mt-1">
+        Please enter your password ⚠️
+      </p>
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+      <input
+        type="password"
+        [(ngModel)]="ComPss"
+        placeholder="********"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <p *ngIf="showConfirmError" class="text-sm text-red-600 mt-1">Passwords do not match ⚠️</p>
+    </div>
+
+    <!-- <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Select Role</label>
+      <select
+        [(ngModel)]="roleUser"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="" disabled selected>Select role</option>
+        <option value="customer">Customer</option>
+        <option value="cashier">Cashier</option>
+      </select>
+
+      <p *ngIf="showRoleError" class="text-sm text-red-600 mt-1">Please select a role ⚠️</p>
+    </div> -->
+
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Select For Your Address</label>
+      <select
+      popover="<!-- required bootstrap js -->
+      <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="" alt="", height="34">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#"></a>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+              <li class="nav-item">
+                <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit">Login/ Signup</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>"
+        [(ngModel)]="addressUser"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="" disabled selected>Select Adress</option>
+        <option value="Pnhom Penh">Banteay Meanchey</option>
+        <option value="Tbong Khmum">Battambang</option>
+        <option value="Benteay MeanChey">Kampong Cham</option>
+        <option value="Battambang">Kampong Chhnang</option>
+        <option value="Kampong Speu">Kampong Speu</option>
+        <option value="Kampong Thom">Kampong Thom</option>
+        <option value="Kampot">Kampot</option>
+        <option value="Kandal">Kandal</option>
+        <option value="Koh Kong">Koh Kong</option>
+        <option value="Kratié">Kratié</option>
+        <option value="Mondulkiri">Mondulkiri</option>
+        <option value="Oddar Meanchey">Oddar Meanchey</option>
+        <option value="Pailin">Pailin</option>
+        <option value="Preah Vihear">Preah Vihear</option>
+        <option value="Prey Veng">Prey Veng</option>
+        <option value="Pursat">Pursat</option>
+        <option value="Ratanakiri">Ratanakiri</option>
+        <option value="Siem Reap">Siem Reap</option>
+        <option value="Sihanoukville (Kampong Saom)">Sihanoukville (Kampong Saom)</option>
+        <option value="Stung Treng">Stung Treng</option>
+        <option value="Svay Rieng">Svay Rieng</option>
+        <option value="Takeo">Takeo</option>
+        <option value="Tboung Khmum">Tboung Khmum</option>
+        <option value="Kep">Kep</option>
+        <option value="Kampong Cham">Kampong Cham</option>
+      </select>
+
+      <p *ngIf="showAddress" class="text-sm text-red-600 mt-1">Please select a role ⚠️</p>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button
+        (click)="sumAdd()"
+        class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>

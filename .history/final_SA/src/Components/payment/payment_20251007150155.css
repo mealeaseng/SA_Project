@@ -1,0 +1,67 @@
+/* Optional: Add to payment.css or any global stylesheet */
+.overflow-x-auto {
+  max-height: 300px; /* Adjust the height to your preference */
+  overflow-y: auto;
+}
+/* Hide everything except #print-section when printing */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  #print-section,
+  #print-section * {
+    visibility: visible !important;
+  }
+
+  #print-section {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    background: white;
+    padding: 20px;
+    z-index: 9999;
+  }
+
+  /* Hide close button and other non-printable elements */
+  #print-section button {
+    display: none !important;
+  }
+}
+
+body {
+  font-family: monospace;
+  width: 280px;
+  margin: auto;
+  color: #000;
+}
+h2 {
+  text-align: center;
+  border-bottom: 1px dashed #000;
+  padding-bottom: 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 10px;
+}
+th,
+td {
+  text-align: left;
+  padding: 4px 0;
+}
+tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+.summary {
+  margin-top: 10px;
+  border-top: 1px dashed #000;
+  padding-top: 5px;
+  font-weight: bold;
+  text-align: right;
+}
+p {
+  margin: 4px 0;
+}

@@ -1,0 +1,22 @@
+<div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <div *ngFor="let product of product_categories" class="bg-white rounded-lg shadow p-4">
+    <img
+      [src]="product.img"
+      alt="{{ product.name_product }}"
+      class="w-full h-48 object-cover rounded-md mb-3"
+    />
+
+    <h2 class="text-lg font-semibold">{{ product.name_product }}</h2>
+    <p class="text-gray-500 text-sm mb-2">{{ product.dis }}</p>
+
+    <div class="flex justify-between items-center">
+      <p class="text-green-600 font-bold text-lg">
+        ${{ product.price }}
+        <span *ngIf="product.discount">(-{{ product.discount }}%)</span>
+      </p>
+      <p class="text-gray-400 text-sm">Stock: {{ product.stock }}</p>
+    </div>
+
+    <p class="text-xs text-gray-400 mt-2">Added: {{ product.date | date : 'mediumDate' }}</p>
+  </div>
+</div>

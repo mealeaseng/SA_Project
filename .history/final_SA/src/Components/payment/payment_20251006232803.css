@@ -1,0 +1,31 @@
+/* Optional: Add to payment.css or any global stylesheet */
+.overflow-x-auto {
+  max-height: 300px; /* Adjust the height to your preference */
+  overflow-y: auto;
+}
+/* Hide everything except #print-section when printing */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  #print-section,
+  #print-section * {
+    visibility: visible !important;
+  }
+
+  #print-section {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    background: white;
+    padding: 20px;
+    z-index: 9999;
+  }
+
+  /* Hide close button and other non-printable elements */
+  #print-section button {
+    display: none !important;
+  }
+}

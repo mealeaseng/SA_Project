@@ -1,0 +1,103 @@
+<div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Trending Products</h2>
+
+  <!-- Mobile Top Products -->
+  <div class="md:hidden mb-6 bg-gray-100 p-4 rounded-lg">
+    <h3 class="text-lg font-bold mb-3">Top Products</h3>
+    <ul class="space-y-2">
+      <li *ngFor="let p of trendingProducts.slice(0, 5)" class="truncate text-gray-700">
+        {{ p.name_product }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Grid layout -->
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+    <!-- Sidebar (md+) -->
+    <div class="hidden md:block md:col-span-1 bg-gray-100 p-4 rounded-lg h-fit">
+      <h3 class="text-xl font-bold mb-4 text-gray-800">Top Products</h3>
+      <ul class="space-y-2">
+        <li
+          *ngFor="let p of trendingProducts.slice(0, 5); let i = index"
+          class="truncate text-gray-700 hover:text-blue-600 transition"
+        >
+          {{ i + 1 }}. {{ p.name_product }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Product Grid -->
+    <div class="md:col-span-4">
+      <!-- Error -->
+      <div *ngIf="error" class="text-center text-red-500 mb-6 py-4 bg-red-50 rounded-lg">
+        {{ error }}
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center py-10">
+        <div
+          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"
+        ></div>
+        <p class="mt-2 text-gray-600">Loading trending products...</p>
+      </div>
+
+      <!-- Product Cards -->
+      <div
+        *ngIf="!loading && !error"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+      >
+        <div
+          *ngFor="let p of trendingProducts"
+          class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full relative"
+        >
+          <!-- Discount Badge -->
+          <div class="absolute top-2 left-2 z-10">
+            <span
+              *ngIf="p.discount > 0"
+              class="px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-full shadow"
+            >
+              -{{ p.discount }}%
+            </span>
+          </div>
+
+          <!-- Image -->
+          <div
+            class="bg-gray-50 aspect-square flex items-center justify-center p-6 transition-transform duration-300 group-hover:bg-gray-100"
+          >
+            <img
+              [src]="p.img"
+              [alt]="p.name_product"
+              class="max-h-40 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              onerror="this.src='https://placehold.co/150?text=No+Image&font=roboto'"
+            />
+          </div>
+
+          <!-- Content -->
+          <div class="p-4 flex flex-col flex-grow justify-between">
+            <h3
+              class="font-semibold text-gray-800 text-sm sm:text-base leading-tight line-clamp-2 mb-2 min-h-[44px]"
+            >
+              {{ p.name_product }}
+            </h3>
+
+            <div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-lg font-bold text-gray-900">${{ p.price | number }}</span>
+                <span *ngIf="p.discount > 0" class="text-sm text-gray-500 line-through">
+                  ${{ p.price / (1 - p.discount / 100) | number }}
+                </span>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">{{ p.totalQty | number }} sold</p>
+            </div>
+
+            <!-- <button
+              class="mt-3 w-full py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors border border-blue-100"
+            >
+              <a [routerLink]="['/category', p._id]">View Details</a>
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

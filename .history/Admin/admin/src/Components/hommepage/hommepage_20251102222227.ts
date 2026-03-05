@@ -1,0 +1,9 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-hommepage',
+  imports: [],
+  templateUrl: './hommepage.html',
+  styleUrl: './hommepage.css',
+})
+export class Hommepage {}

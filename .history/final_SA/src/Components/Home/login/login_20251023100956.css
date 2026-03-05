@@ -1,0 +1,19 @@
+select option {
+  max-height: 2rem;
+}
+
+select:focus option {
+  overflow-y: auto;
+}
+
+/* Limit dropdown height when opened */
+select {
+  overflow-y: auto;
+}
+select option {
+  padding: 0.5rem;
+}
+
+select:focus {
+  height: auto;
+}

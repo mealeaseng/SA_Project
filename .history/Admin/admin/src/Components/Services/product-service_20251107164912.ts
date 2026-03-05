@@ -1,0 +1,53 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+interface ProductItem {
+  _id: string;
+  product_id: string;
+  name_product: string;
+  img: string;
+  price: number;
+  qty: number;
+  stock: number;
+  dis: string;
+  discount: number;
+  category: string;
+  amount: number;
+  __v: number;
+  date: string;
+}
+
+interface CategoryItem {
+  _id: string;
+  name: string;
+  // Add other properties as needed
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProductService {
+  private baseUrl = 'http://localhost:3000/api/product';
+
+  constructor(private http: HttpClient) {}
+
+  // Fetch all products
+  getAllProducts(): Observable<any> {
+    return this.http.get<any>(this.baseUrl);
+  }
+
+  // Fetch products by category
+  getProductsByCategory(categoryId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/category/${categoryId}`);
+  }
+
+  getProductsByName(name: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/search?name=${encodeURIComponent(name)}`);
+  }
+
+  // Alternative: Generic search endpoint that can search by multiple fields
+  searchProducts(searchTerm: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/search?q=${encodeURIComponent(searchTerm)}`);
+  }
+}

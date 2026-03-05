@@ -1,0 +1,60 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-center">Tren Product</h2>
+  <div class="grid grid-cols-5 grid-rows-5 gap-2">
+    <!-- Sidebar / Trending Products Header or Categories -->
+    <div class="row-span-5 bg-gray-100 p-4 rounded-lg">
+      <h2 class="text-2xl font-bold mb-4">Name Product</h2>
+
+      <ul class="space-y-2">
+        <li *ngFor="let p of trendingProducts.slice(0, 5)" class="truncate">
+          {{ p.name_product }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Product Grid -->
+    <div class="col-span-4 row-span-5">
+      <!-- Error -->
+      <div *ngIf="error" class="text-center text-red-500 mb-4">
+        {{ error }}
+      </div>
+
+      <!-- Product Grid -->
+      <div
+        *ngIf="!loading && !error"
+        class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+      >
+        <div
+          *ngFor="let p of trendingProducts"
+          class="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-200 flex flex-col items-center text-center"
+        >
+          <div class="relative w-full h-40 flex justify-center items-center mb-4">
+            <img
+              [src]="p.img"
+              alt="{{ p.name_product }}"
+              class="max-h-40 object-contain rounded-xl"
+            />
+          </div>
+
+          <h3 class="font-semibold text-gray-800 text-lg truncate w-full mb-1">
+            {{ p.name_product }}
+          </h3>
+
+          <p class="text-green-600 font-semibold mb-1">💲{{ p.price | number : '1.2-2' }}</p>
+
+          <p class="text-sm text-gray-500 mb-2">
+            🛒 Sold: <span class="font-medium text-gray-700">{{ p.totalQty }}</span>
+          </p>
+
+          <!-- Discount badge -->
+          <div
+            *ngIf="p.discount > 0"
+            class="px-3 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-full"
+          >
+            -{{ p.discount }}% OFF
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

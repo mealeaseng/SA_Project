@@ -1,0 +1,68 @@
+/* Base animation setup */
+.fade-up,
+.fade-down,
+.fade-left,
+.fade-right {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Fade Up */
+.fade-up {
+  animation: fadeUp 1s ease-out forwards;
+}
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade Down */
+.fade-down {
+  animation: fadeDown 1s ease-out forwards;
+}
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade Left */
+.fade-left {
+  animation: fadeLeft 1s ease-out forwards;
+}
+@keyframes fadeLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Fade Right */
+.fade-right {
+  animation: fadeRight 1s ease-out forwards;
+}
+@keyframes fadeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

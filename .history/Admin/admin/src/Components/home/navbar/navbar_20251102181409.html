@@ -1,0 +1,100 @@
+<!-- app.component.html -->
+<div class="flex min-h-screen">
+  <!-- Desktop Sidebar (hidden on mobile) -->
+  <aside
+    class="hidden md:flex md:flex-col md:w-64 bg-gray-800 text-white"
+    [ngClass]="{ 'md:translate-x-0': true }"
+  >
+    <div class="p-6 text-2xl font-bold border-b border-gray-700">Admin Panel</div>
+    <nav class="mt-4 px-6 flex-1">
+      <ul class="space-y-2">
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">🏠 Home</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">📦 All Products</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">➕ Post Product</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">✏️ Update Product</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">🗑️ Remove Product</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">⚙️ Settings</li>
+      </ul>
+    </nav>
+    <div class="p-6 border-t border-gray-700 hover:bg-gray-700 cursor-pointer mt-auto">
+      🔒 Logout
+    </div>
+  </aside>
+
+  <!-- Mobile Sidebar (overlay) -->
+  <div
+    class="md:hidden fixed inset-0 z-30 bg-black bg-opacity-50 transition-opacity"
+    [class.hidden]="!sidebarOpen"
+    (click)="sidebarOpen = false"
+  ></div>
+
+  <aside
+    class="md:hidden fixed top-0 left-0 h-full w-64 bg-gray-800 text-white z-40 transform transition-transform duration-300 ease-in-out"
+    [ngClass]="{ 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen }"
+  >
+    <div
+      class="p-6 fixed text-2xl font-bold border-b border-gray-700 flex justify-between items-center"
+    >
+      Admin Panel
+      <button (click)="sidebarOpen = false" class="text-white">✕</button>
+    </div>
+    <nav class="mt-4 px-6">
+      <ul class="space-y-2">
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">🏠 Home</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">📦 All Products</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">➕ Post Product</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">✏️ Update Product</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">🗑️ Remove Product</li>
+        <li class="hover:bg-gray-700 rounded-md px-3 py-2 cursor-pointer">⚙️ Settings</li>
+      </ul>
+    </nav>
+    <div class="p-6 border-t border-gray-700 hover:bg-gray-700 cursor-pointer mt-auto">
+      🔒 Logout
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-gray-800 text-white p-4 flex justify-between items-center">
+      <div class="text-xl font-bold">Admin Panel</div>
+      <button (click)="sidebarOpen = true" class="text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Content Area -->
+    <main class="flex-1 bg-gray-100 p-4 md:p-6 overflow-auto">
+      <div class="bg-white rounded-lg shadow p-4 md:p-6">
+        <header class="border-b pb-4 mb-6">
+          <h2 class="text-2xl md:text-3xl font-semibold text-gray-800">Admin Dashboard</h2>
+          <p class="text-gray-500">Welcome back, Admin!</p>
+        </header>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
+          <div class="bg-blue-500 text-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-medium">Total Products</h3>
+            <p class="text-2xl font-bold mt-2">128</p>
+          </div>
+          <div class="bg-green-500 text-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-medium">Active Users</h3>
+            <p class="text-2xl font-bold mt-2">56</p>
+          </div>
+          <div class="bg-yellow-500 text-white p-4 rounded-lg shadow">
+            <h3 class="text-lg font-medium">Pending Orders</h3>
+            <p class="text-2xl font-bold mt-2">14</p>
+          </div>
+        </section>
+
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

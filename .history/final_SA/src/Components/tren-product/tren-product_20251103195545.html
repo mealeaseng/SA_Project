@@ -1,0 +1,84 @@
+<div class="p-4 sm:p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Tren Product</h2>
+
+  <!-- Mobile: Show product list as top section -->
+  <div class="md:hidden mb-6 bg-gray-100 p-4 rounded-lg">
+    <h3 class="text-lg font-bold mb-3">Top Products</h3>
+    <ul class="space-y-2">
+      <li *ngFor="let p of trendingProducts.slice(0, 5)" class="truncate text-gray-700">
+        {{ p.name_product }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Grid: 1 column on mobile, 5 columns on medium+ -->
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+    <!-- Sidebar: Hidden on mobile, shown from md up -->
+    <div class="hidden md:block md:col-span-1 bg-gray-100 p-4 rounded-lg h-fit">
+      <h3 class="text-xl font-bold mb-4 text-gray-800">Top Products</h3>
+      <ul class="space-y-2">
+        <li
+          *ngFor="let p of trendingProducts.slice(0, 5)"
+          class="truncate text-gray-700 hover:text-blue-600 transition"
+        >
+          {{ p.name_product }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Product Grid -->
+    <div class="md:col-span-4">
+      <!-- Error -->
+      <div *ngIf="error" class="text-center text-red-500 mb-6 py-4 bg-red-50 rounded-lg">
+        {{ error }}
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="text-center py-10">
+        <div
+          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"
+        ></div>
+        <p class="mt-2 text-gray-600">Loading trending products...</p>
+      </div>
+
+      <!-- Product Grid -->
+      <div *ngIf="!loading && !error">
+        <!-- Responsive: 1 col (sm), 2 (md), 3 (lg), 4 (xl) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div
+            *ngFor="let p of trendingProducts"
+            class="bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex flex-col items-center text-center border border-gray-100"
+          >
+            <!-- Image container: responsive height, centers image -->
+            <div class="w-full aspect-square flex items-center justify-center mb-3">
+              <img
+                [src]="p.img"
+                [alt]="p.name_product"
+                class="max-h-36 w-auto object-contain"
+                onerror="this.src='https://via.placeholder.com/150?text=No+Image'"
+              />
+            </div>
+
+            <h3 class="font-semibold text-gray-800 text-sm sm:text-base line-clamp-2 mb-1">
+              {{ p.name_product }}
+            </h3>
+
+            <p class="text-green-600 font-bold text-lg">💲{{ p.price | number : '1.2-2' }}</p>
+
+            <p class="text-xs text-gray-500 mt-1">
+              🛒 Sold: <span class="font-medium text-gray-700">{{ p.totalQty }}</span>
+            </p>
+
+            <!-- Discount badge -->
+            <div
+              *ngIf="p.discount > 0"
+              class="mt-2 px-2.5 py-1 bg-red-100 text-red-600 text-xs font-bold rounded-full"
+            >
+              -{{ p.discount }}% OFF
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

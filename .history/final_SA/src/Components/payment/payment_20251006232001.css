@@ -1,0 +1,5 @@
+/* Optional: Add to payment.css or any global stylesheet */
+.overflow-x-auto {
+  max-height: 300px; /* Adjust the height to your preference */
+  overflow-y: auto;
+}

@@ -1,0 +1,51 @@
+<div class="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow">
+  <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">⚙️ Settings</h2>
+
+  <form [formGroup]="profileForm" (ngSubmit)="submit()" class="space-y-4">
+    <!-- Profile Image -->
+    <div class="flex flex-col items-center gap-3">
+      <img
+        *ngIf="imagePreview"
+        [src]="imagePreview"
+        class="w-24 h-24 rounded-full object-cover border"
+      />
+
+      <input type="file" accept="image/*" (change)="onImageSelect($event)" class="text-sm" />
+    </div>
+
+    <!-- Name -->
+    <input formControlName="name" placeholder="Name" class="w-full px-4 py-3 border rounded-xl" />
+
+    <!-- Email -->
+    <input
+      formControlName="email"
+      placeholder="Email"
+      type="email"
+      class="w-full px-4 py-3 border rounded-xl"
+    />
+
+    <!-- Password -->
+    <input
+      formControlName="password"
+      placeholder="New Password"
+      type="password"
+      class="w-full px-4 py-3 border rounded-xl"
+    />
+
+    <!-- Phone -->
+    <input
+      formControlName="phone"
+      placeholder="Phone number"
+      class="w-full px-4 py-3 border rounded-xl"
+    />
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      [disabled]="profileForm.invalid"
+      class="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition"
+    >
+      Save Changes
+    </button>
+  </form>
+</div>

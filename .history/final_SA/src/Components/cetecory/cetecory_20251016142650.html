@@ -1,0 +1,49 @@
+<!-- Welcome Section -->
+<div
+  class="p-6 bg-gray-100 rounded-lg shadow-md text-gray-800 leading-7 max-w-2xl mx-auto text-center fade-down"
+>
+  <h2 class="text-2xl font-bold text-blue-600 mb-4">Welcome to My Mart!</h2>
+  <p class="fade-up">
+    We are delighted to have you here. At My Mart, our goal is to bring you quality products at the
+    best prices, all in one convenient place. Whether you’re shopping for daily essentials, fresh
+    items, or special deals, we’ve got something for everyone. We believe shopping should be easy,
+    enjoyable, and affordable, and that’s exactly what you’ll find at My Mart. Thank you for
+    choosing us – your satisfaction is our priority.
+  </p>
+</div>
+
+<!-- Products Section -->
+<div class="px-4 max-w-screen-xl mx-auto py-8 fade-up">
+  <h2 class="text-3xl font-bold text-center mb-10 fade-down">Let see more Product!</h2>
+
+  <div
+    class="sm:grid sm:grid-cols-2 md:grid-cols-4 gap-8 flex overflow-x-auto space-x-4 sm:space-x-0 sm:overflow-x-visible px-2"
+  >
+    <!-- Categories Section -->
+    <div *ngFor="let category of categories" class="mb-12">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">{{ category.name_category }}</h2>
+      <img
+        [src]="category.thumbnail"
+        [alt]="category.name_category"
+        class="w-full h-40 object-cover rounded mb-4"
+      />
+
+      <!-- Products inside category -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div
+          *ngFor="let product of category.products"
+          class="bg-white shadow-md rounded p-4 text-center"
+        >
+          <img
+            [src]="product.img"
+            [alt]="product.name_product"
+            class="w-full h-32 object-cover rounded mb-2"
+          />
+          <h3 class="font-semibold text-lg">{{ product.name_product }}</h3>
+          <p class="text-gray-600">Price: ${{ product.price }}</p>
+          <p class="text-gray-500 text-sm">{{ product.dis }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<!-- Mobile search (in top navbar, visible only on small screens) -->
+<div class="flex-1 mx-4 md:hidden">
+  <div class="relative">
+    <svg
+      class="absolute left-3 top-2.5 w-5 h-5 text-gray-400"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1016.65 16.65z"
+      />
+    </svg>
+
+    <input
+      type="text"
+      name="mobileSearch"
+      placeholder="Search..."
+      [(ngModel)]="searchValue"
+      (keyup.enter)="searchProduct(searchValue)"
+      class="w-full pl-10 pr-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+</div>
+
+<!-- Desktop Menu (inside the md:flex list) -->
+<li>
+  <div class="relative">
+    <svg
+      class="absolute left-3 top-2.5 w-5 h-5 text-gray-400"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1016.65 16.65z"
+      />
+    </svg>
+
+    <input
+      type="text"
+      name="desktopSearch"
+      placeholder="Search Product..."
+      [(ngModel)]="searchValue"
+      (keyup.enter)="searchProduct(searchValue)"
+      class="w-64 pl-10 pr-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+</li>

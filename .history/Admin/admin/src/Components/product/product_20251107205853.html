@@ -1,0 +1,76 @@
+<div class="p-6">
+  <!-- Category Filter -->
+  <div class="mb-6">
+    <label for="categoryFilter" class="block text-sm font-medium text-gray-700 mb-2">
+      Filter by Category:
+    </label>
+    <select
+      id="categoryFilter"
+      (change)="onCategoryChange($event)"
+      class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option value="">All Categories</option>
+      <option *ngFor="let category of categories" [value]="category._id">
+        {{ category.name_category }}
+      </option>
+    </select>
+  </div>
+  <!--  -->
+  <div>
+    <h2>getSelectedCategoryName</h2>
+    <div *ngFor="let list_catecory of listcetecory">
+      <img src="{{ list_catecory.thumbnail }}" alt="" />
+    </div>
+  </div>
+  <!--  -->
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="text-center py-8">
+    <p>Loading products...</p>
+  </div>
+
+  <!-- Products Grid -->
+  <div
+    *ngIf="!isLoading"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+  >
+    <h2 class="col-span-full text-2xl font-bold mb-4">
+      {{ getSelectedCategoryName() }}
+    </h2>
+    <!--  -->
+
+    <!--  -->
+
+    <div *ngFor="let product of product_categories" class="bg-white rounded-lg shadow p-4">
+      <img
+        [src]="product.img.trim()"
+        [alt]="product.name_product"
+        class="w-full h-48 object-cover rounded-md mb-3"
+        (error)="onImageError($event)"
+      />
+
+      <h2 class="text-lg font-semibold">{{ product.name_product }}</h2>
+      <p class="text-gray-500 text-sm mb-2">{{ product.dis }}</p>
+
+      <div class="flex justify-between items-center mt-4">
+        <p class="text-green-600 font-bold text-lg">
+          ${{ product.price }}
+          <span *ngIf="product.discount" class="text-sm text-red-500">
+            (-{{ product.discount }}%)
+          </span>
+        </p>
+        <p class="text-gray-400 text-sm">Stock: {{ product.stock }}</p>
+      </div>
+
+      <!-- Additional info -->
+      <div class="mt-2 text-xs text-gray-400">
+        <p>Product ID: {{ product.product_id }}</p>
+        <p>Category ID: {{ product.category }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- No products message -->
+  <div *ngIf="!isLoading && product_categories.length === 0" class="text-center py-8 text-gray-500">
+    <p>No products found.</p>
+  </div>
+</div>

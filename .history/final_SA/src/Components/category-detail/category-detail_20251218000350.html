@@ -1,0 +1,81 @@
+<div class="max-w-screen-xl mx-auto px-4 py-10">
+  <!-- Title -->
+  <h2 class="text-4xl font-extrabold text-center mb-12 text-gray-800">Products in this Category</h2>
+
+  <!-- Products Grid -->
+  <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div
+      *ngFor="let product of products"
+      class="group bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 overflow-hidden flex flex-col"
+    >
+      <!-- Image -->
+      <div class="bg-gray-100 p-4">
+        <img
+          [src]="
+            product.img?.startsWith('http') ? product.img : 'http://localhost:3000' + product.img
+          "
+          [alt]="product.name_product"
+          (error)="product.img = '/assets/default.jpg'"
+          class="w-full h-44 object-cover rounded-xl group-hover:scale-105 transition"
+        />
+      </div>
+
+      <!-- Content -->
+      <div class="flex flex-col flex-grow p-5 text-center">
+        <h3 class="font-bold text-lg text-gray-800 line-clamp-1">
+          {{ product.name_product }}
+        </h3>
+
+        <p class="text-sm text-gray-500 mt-1 line-clamp-2">
+          {{ product.dis }}
+        </p>
+
+        <!-- Meta Info -->
+        <div class="mt-3 space-y-1 text-sm">
+          <p class="text-red-500 font-medium">Discount: {{ product.discount }}%</p>
+          <p class="text-gray-600">
+            Stock: <span class="font-semibold">{{ product.stock }}</span>
+          </p>
+        </div>
+
+        <!-- Price -->
+        <div class="mt-4 text-2xl font-bold text-green-600">${{ product.price }}</div>
+
+        <!-- Button -->
+        <button
+          (click)="addToCart(product)"
+          [disabled]="product.stock === 0 || product.qtyAdded >= product.stock"
+          class="mt-auto mt-6 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:hover:bg-gray-600 disabled:cursor-not-allowed text-white py-2.5 rounded-xl font-semibold transition"
+        >
+          {{ product.qtyAdded > 0 ? 'Add More' : 'Add To Cart' }}
+
+          <span
+            *ngIf="product.qtyAdded > 0"
+            class="bg-white text-blue-600 rounded-full px-2 py-0.5 text-sm font-bold"
+          >
+            {{ product.qtyAdded }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Action Buttons -->
+<div class="fixed bottom-6 right-6 z-50 flex gap-4">
+  <button
+    routerLink="/payment"
+    [disabled]="!hasItemsInCart()"
+    class="bg-green-600 hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-full shadow-lg transition"
+  >
+    💳 Payment
+  </button>
+
+  <button
+    (click)="Clear()"
+    [disabled]="!hasItemsInCart()"
+    class="bg-red-600 hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-full shadow-lg transition"
+  >
+    🗑 Clear All
+  </button>
+</div>

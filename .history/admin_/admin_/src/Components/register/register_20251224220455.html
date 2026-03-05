@@ -1,0 +1,26 @@
+<div class="auth-container">
+  <form [formGroup]="registerForm" (ngSubmit)="submit()" class="auth-card">
+    <h2>Create Account</h2>
+
+    <input placeholder="Name" formControlName="name" />
+
+    <input placeholder="Email" formControlName="email" />
+
+    <input type="password" placeholder="Password" formControlName="password" />
+
+    <input placeholder="Phone Number" formControlName="phone" />
+
+    <!-- Profile Image -->
+    <div class="image-box">
+      <img *ngIf="imagePreview" [src]="imagePreview" />
+      <input type="file" (change)="onImageSelect($event)" />
+    </div>
+
+    <button [disabled]="registerForm.invalid">Register</button>
+
+    <p>
+      Already have an account?
+      <a routerLink="/login">Login</a>
+    </p>
+  </form>
+</div>

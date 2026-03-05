@@ -1,0 +1,26 @@
+<div class="p-4">
+  <h1 class="text-2xl font-bold mb-4">📦 All Products by Category</h1>
+
+  <div *ngFor="let category of product_categories" class="mb-6 border rounded-lg p-4 bg-gray-50">
+    <h2 class="text-xl font-semibold mb-2">🗂️ {{ category.name_product }}</h2>
+    <img
+      [src]="category.imageUrl || 'assets/default-category.png'"
+      alt="{{ category.name }}"
+      class="w-32 h-32 object-cover mb-3 rounded"
+    />
+    <p class="text-gray-600 mb-2">{{ category.dis }}</p>
+
+    <div *ngIf="category.products?.length; else noProducts">
+      <h3 class="font-semibold mb-2">Products:</h3>
+      <ul class="list-disc pl-5">
+        <li *ngFor="let product of category.products">
+          {{ product.name_product }} — 💲{{ product.price }}
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noProducts>
+      <p class="text-gray-500 italic">No products available in this category.</p>
+    </ng-template>
+  </div>
+</div>

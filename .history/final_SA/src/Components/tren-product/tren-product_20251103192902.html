@@ -1,0 +1,16 @@
+<div class="trending-container">
+  <h2 class="title">🔥 Trending Products</h2>
+  <h2 class="title">🔥 Trending Products</h2>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="product-grid" *ngIf="!loading && !error">
+    <div *ngFor="let p of trendingProducts" class="product-card">
+      <img [src]="p.img" alt="{{ p.name_product }}" class="product-img" />
+      <h3 class="product-name">{{ p.name_product }}</h3>
+      <p class="price">💲{{ p.price | number : '1.2-2' }}</p>
+      <p class="qty">🛒 Sold: {{ p.totalQty }}</p>
+    </div>
+  </div>
+</div>

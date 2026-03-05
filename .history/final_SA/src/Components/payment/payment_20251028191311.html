@@ -1,0 +1,277 @@
+<!-- Order Summary -->
+<div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg max-w-3xl mx-auto mt-10">
+  <div class="container mx-auto p-6">
+    <!-- Title -->
+    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">🛒 Review Your Order</h2>
+
+    <!-- Product Table -->
+    <div class="overflow-x-auto bg-white p-6 rounded-lg shadow-md">
+      <table class="w-full table-auto border-collapse border border-gray-200">
+        <!-- Table Head -->
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">
+              Product
+            </th>
+            <!-- <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">
+              Description
+            </th> -->
+            <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">
+              Discount
+            </th>
+            <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">Price</th>
+            <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">
+              Quantity
+            </th>
+            <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">Total</th>
+            <th class="px-4 py-2 border-b text-left text-sm font-semibold text-gray-600">Action</th>
+          </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+          <tr *ngFor="let product of total_Products">
+            <td class="px-4 py-2 border-b text-sm text-gray-800">
+              <div class="flex items-center">
+                <img
+                  [src]="product.img"
+                  [alt]="product.name_product"
+                  class="w-12 h-12 object-cover rounded mr-4 line-clamp-1"
+                />
+                {{ product.name_product }}
+              </div>
+            </td>
+            <!-- <td class="px-4 py-2 border-b text-sm text-gray-600">{{ product.dis }}</td> -->
+            <td class="px-4 py-2 border-b text-sm text-red-500">{{ product.discount }}%</td>
+            <td class="px-4 py-2 border-b text-sm text-green-600">${{ product.price }}</td>
+            <td class="px-4 py-2 border-b text-sm text-center">
+              {{ product.qtyAdded }}
+            </td>
+            <td class="px-4 py-2 border-b text-sm text-center">
+              {{ (product.price * product.qtyAdded).toFixed(2) }}
+            </td>
+            <td class="px-4 py-2 border-b text-sm text-center">
+              <!-- ✅ CORRECT: Angular syntax -->
+              <button class="cursor-pointer" (click)="increase(product)">+</button>
+              <button class="cursor-pointer ml-5" (click)="decrease(product)">-</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="mt-10 text-center bg-gray-100 p-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-bold text-gray-700">🛒 Final Summary</h2>
+      <p class="text-gray-600 mt-2">Total Quantity: {{ getTotalQty() }}</p>
+      <p class="text-gray-800 font-semibold text-xl mt-2">
+        Total Price: {{ getGrandTotal() | currency : 'USD' }}
+      </p>
+    </div>
+
+    <!-- Payment Action Buttons -->
+    <div class="text-center flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-8">
+      <button
+        (click)="payNow()"
+        class="w-full sm:w-auto px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow-md transition transform hover:scale-105"
+      >
+        💳 Pay Now
+      </button>
+      <button
+        (click)="cancelOrder()"
+        class="w-full sm:w-auto px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-md transition transform hover:scale-105"
+      >
+        ❌ Cancel Order
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 1 & 2 Modal -->
+  <div
+    *ngIf="step > 0"
+    class="fixed inset-0 flex items-center justify-center z-50 p-4 bg-black/50 backdrop-blur-sm"
+    (click)="step = 0"
+  >
+    <div
+      class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center relative"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        (click)="step = 0"
+        class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl font-bold"
+      >
+        &times;
+      </button>
+
+      <div *ngIf="step === 1">
+        <h2 class="text-xl sm:text-2xl font-bold mb-6">How do you want to receive your order?</h2>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <button
+            (click)="selectOption('Delivery')"
+            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow transition"
+          >
+            🚚 Delivery
+          </button>
+          <button
+            (click)="selectOption('Pickup')"
+            class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl shadow transition"
+          >
+            🏬 Pickup
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="step === 2">
+        <h2 class="text-lg sm:text-xl font-semibold mb-4">
+          Payment Method for <span class="capitalize">{{ choice }}</span>
+        </h2>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <button
+            (click)="pay('Cash')"
+            class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl shadow transition"
+          >
+            💵 Cash
+          </button>
+          <button
+            (click)="pay('QR Pay')"
+            class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl shadow transition"
+          >
+            📱 QR Pay
+          </button>
+        </div>
+        <div class="mt-6">
+          <button
+            (click)="back()"
+            class="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg"
+          >
+            ⬅️ Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Payment Modal -->
+  <div
+    *ngIf="showQRCode"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+  >
+    <div class="relative bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 text-center">
+      <button
+        class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+        (click)="showQRCode = false"
+      >
+        ✕
+      </button>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">📱 Scan to Pay</h2>
+      <div class="flex justify-around mb-4 text-green-600 font-semibold">
+        <p>Total Amount: {{ getGrandTotal() | currency : 'USD' }}</p>
+        <p>Total Qty: {{ getTotalQty() }}</p>
+      </div>
+      <img
+        [src]="qrImage"
+        alt="QR Code"
+        class="w-48 h-48 mx-auto rounded-lg border border-gray-300 shadow-md mb-4"
+      />
+      <p class="text-gray-700 mb-6">Thank you for your purchase!</p>
+      <button
+        (click)="printQR()"
+        class="w-full mb-6 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow transition"
+      >
+        🖨 Print Receipt
+      </button>
+      <!-- Scrollable Table -->
+      <div class="overflow-x-auto max-h-60 md:max-h-96 overflow-y-auto">
+        <table
+          class="w-full min-w-[400px] text-sm border border-gray-200 rounded-lg overflow-hidden"
+        >
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-4 py-2 border-b border-gray-200 text-left">Id</th>
+              <th class="px-4 py-2 border-b border-gray-200 text-left">Product</th>
+              <th class="px-4 py-2 border-b border-gray-200 text-center">Qty</th>
+              <th class="px-4 py-2 border-b border-gray-200 text-right">Price</th>
+            </tr>
+          </thead>
+          <tbody class="max-h-64 overflow-y-auto">
+            <tr *ngFor="let product of total_Products; trackBy: trackById" class="even:bg-gray-50">
+              <td class="px-4 py-2 border-b border-gray-200">{{ product.id }}</td>
+              <td class="px-4 py-2 border-b border-gray-200">{{ product.name_product }}</td>
+              <td class="px-4 py-2 border-b border-gray-200 text-center">{{ product.qty }}</td>
+              <td class="px-4 py-2 border-b border-gray-200 text-right">
+                {{ product.price | currency : 'USD' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cash Payment Modal -->
+  <div
+    *ngIf="showCash"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+  >
+    <div class="relative bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 text-center">
+      <button
+        class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+        (click)="showCash = false"
+      >
+        ✕
+      </button>
+      <img
+        [src]="imgCheck"
+        alt="Payment Success"
+        class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-green-300 shadow-md"
+      />
+      <h2 class="text-2xl font-bold text-green-600 mb-2">💵 Cash Payment Successful!</h2>
+      <p class="text-gray-700 mb-4">Thank you! Your order has been confirmed.</p>
+      <p>Total Price: {{ getGrandTotal() | currency : 'USD' }}</p>
+      <p>Total Qty: {{ getTotalQty() }}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+        <button
+          (click)="printCash()"
+          class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow-md"
+        >
+          🖨 Print Receipt
+        </button>
+        <button
+          (click)="showCash = false"
+          class="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-xl shadow-md"
+        >
+          🏠 Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cash Receipt Section (hidden for printing only) -->
+  <div id="cash-print-section" class="hidden print:block p-4">
+    <h2 class="text-center text-green-600 text-lg font-bold mb-4">💵 Cash Payment Receipt</h2>
+    <table class="w-full border-collapse border border-gray-300 text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border border-gray-300 px-2 py-1">ID</th>
+          <th class="border border-gray-300 px-2 py-1">Product</th>
+          <th class="border border-gray-300 px-2 py-1">Qty</th>
+          <!-- <th class="border border-gray-300 px-2 py-1">Price</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of total_Products">
+          <td class="border border-gray-300 px-2 py-1">{{ p.id }}</td>
+          <td class="border border-gray-300 px-2 py-1">{{ p.name }}</td>
+          <td class="border border-gray-300 px-2 py-1 text-center">{{ p.qtyAdded }}</td>
+          <td class="border border-gray-300 px-2 py-1 text-right">
+            {{ p.price * p.qty | currency : 'USD' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-right font-semibold mt-4">
+      <p>Total Quantity: {{ getTotalQty() }}</p>
+      <p>Total Price: {{ getGrandTotal() | currency : 'USD' }}</p>
+      <p>✅ Payment Received — Thank You!</p>
+    </div>
+  </div>
+</div>

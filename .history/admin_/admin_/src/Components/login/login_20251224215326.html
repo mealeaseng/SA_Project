@@ -1,0 +1,35 @@
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="submit()" class="register-card">
+    <h2>Create Account</h2>
+    <p>Sign up to get started</p>
+
+    <input type="text" placeholder="Full Name" formControlName="fullName" />
+
+    <small *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid">
+      Full name is required
+    </small>
+
+    <input type="email" placeholder="Email Address" formControlName="email" />
+
+    <small *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+      Enter a valid email
+    </small>
+
+    <input type="password" placeholder="Password" formControlName="password" />
+
+    <small *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+      Minimum 6 characters
+    </small>
+
+    <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
+
+    <label class="checkbox">
+      <input type="checkbox" formControlName="agree" />
+      I agree to the terms
+    </label>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+
+    <p class="login-link">Already have an account? <a routerLink="/login">Login</a></p>
+  </form>
+</div>

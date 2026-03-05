@@ -1,0 +1,50 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+    <span>🔥</span> Trending Products
+  </h2>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center text-gray-500 animate-pulse">
+    Loading trending products...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="text-center text-red-500">
+    {{ error }}
+  </div>
+
+  <!-- Product Grid -->
+  <div *ngIf="!loading && !error" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div
+      *ngFor="let p of trendingProducts"
+      class="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 duration-200 p-4 flex flex-col items-center text-center"
+    >
+      <div class="relative w-full h-40 flex justify-center items-center mb-4">
+        <img [src]="p.img" alt="{{ p.name_product }}" class="max-h-40 object-contain rounded-xl" />
+      </div>
+
+      <h3 class="font-semibold text-gray-800 text-lg truncate w-full">
+        {{ p.name_product }}
+      </h3>
+
+      <p class="text-green-600 font-semibold mt-1">💲{{ p.price | number : '1.2-2' }}</p>
+
+      <p class="text-sm text-gray-500 mt-1">
+        🛒 Sold: <span class="font-medium text-gray-700">{{ p.totalQty }}</span>
+      </p>
+
+      <!-- Discount badge -->
+      <div
+        *ngIf="p.discount > 0"
+        class="mt-2 px-3 py-1 bg-red-100 text-red-600 text-xs font-semibold rounded-full"
+      >
+        -{{ p.discount }}% OFF
+      </div>
+      <button
+        class="cursor-pointer mt-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full hover:bg-blue-700 transition"
+      >
+        Find Product
+      </button>
+    </div>
+  </div>
+</div>
